@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalFinance.Repository"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalFinance.Service", "PersonalFinance.Service\PersonalFinance.Service.csproj", "{DEF57276-D896-4D58-84BE-8E61BC59DB2A}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "personalfinance.client", "personalfinance.client\personalfinance.client.esproj", "{9684FFB7-5B50-4456-9311-C0861A254FAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,12 @@ Global
 		{DEF57276-D896-4D58-84BE-8E61BC59DB2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEF57276-D896-4D58-84BE-8E61BC59DB2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEF57276-D896-4D58-84BE-8E61BC59DB2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9684FFB7-5B50-4456-9311-C0861A254FAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9684FFB7-5B50-4456-9311-C0861A254FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9684FFB7-5B50-4456-9311-C0861A254FAA}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9684FFB7-5B50-4456-9311-C0861A254FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9684FFB7-5B50-4456-9311-C0861A254FAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9684FFB7-5B50-4456-9311-C0861A254FAA}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
