@@ -1,0 +1,58 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AutoMapper;
+using PersonalFinance.Repository.Entities;
+using PersonalFinance.Repository.Repositories.ExpenditureCategoryRepository;
+using PersonalFinance.Service.DTOs;
+
+namespace PersonalFinance.Service.Services.ExpenditureCategoryService
+{
+    public class ExpenditureCategoryService : IExpenditureCategoryService
+    {
+        private readonly IExpenditureCategoryRepository _expenditureCategoryRepository;
+        private readonly IMapper _mapper;
+
+        public ExpenditureCategoryService(IExpenditureCategoryRepository expenditureCategoryRepository, IMapper mapper)
+        {
+            _expenditureCategoryRepository = expenditureCategoryRepository;
+            _mapper = mapper;
+        }
+
+
+        public async Task<List<ExpenditureCategoryDto>> GetAllExpenditureCategories()
+        {
+            var expenditureCategories = await _expenditureCategoryRepository.GetAllExpenditureCategories();
+
+            return _mapper.Map<List<ExpenditureCategoryDto>>(expenditureCategories);
+        }
+
+        public async Task<ExpenditureCategoryDto> GetByIdExpenditureCategory(int id)
+        {
+            var expenditureCategory = await _expenditureCategoryRepository.GetByIdExpenditureCategory(id);
+            return _mapper.Map<ExpenditureCategoryDto>(expenditureCategory);
+        }
+
+
+        public async Task CreateExpenditureCategory(ExpenditureCategoryDto dto)
+        {
+            var expenditureCategory = _mapper.Map<ExpenditureCategory>(dto);
+            await _expenditureCategoryRepository.CreateExpenditureCategory(expenditureCategory);
+        }
+
+        public async Task UpdateExpenditureCategory(ExpenditureCategoryDto dto)
+        {
+            var expenditureCategory = _mapper.Map<ExpenditureCategory>(dto);
+            await _expenditureCategoryRepository.UpdateExpenditureCategory(expenditureCategory);
+        }
+
+        public async Task DeleteExpenditureCategory(int id)
+        {
+            var expenditureCategory = await _expenditureCategoryRepository.GetByIdExpenditureCategory(id);
+            _expenditureCategoryRepository.DeleteExpenditureCategory(expenditureCategory);
+        }
+    }
+}
+

@@ -10,4 +10,10 @@
     <ProjectReference Include="..\PersonalFinance.Repository\PersonalFinance.Repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.13" />
+  </ItemGroup>
+
 </Project>
