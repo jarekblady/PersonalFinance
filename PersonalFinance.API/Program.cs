@@ -74,9 +74,13 @@ builder.Services.AddScoped<IIncomeService, IncomeService>();
 builder.Services.AddScoped<IExpenditureCategoryService, ExpenditureCategoryService>();
 builder.Services.AddScoped<IExpenditureService, ExpenditureService>();
 
+builder.Services.AddScoped<DbInitializer>();
+
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+await app.Services.CreateScope().ServiceProvider.GetRequiredService<DbInitializer>().Initializer();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
