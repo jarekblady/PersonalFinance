@@ -7,24 +7,28 @@ using AutoMapper;
 using PersonalFinance.Repository.Entities;
 using PersonalFinance.Repository.Repositories.IncomeRepository;
 using PersonalFinance.Service.DTOs;
+using PersonalFinance.Service.Services.CurrentUserService;
 
 namespace PersonalFinance.Service.Services.IncomeService
 {
     public class IncomeService : IIncomeService
     {
         private readonly IIncomeRepository _incomeRepository;
+        private readonly ICurrentUserService _currentUserService;
         private readonly IMapper _mapper;
 
-        public IncomeService(IIncomeRepository incomeRepository, IMapper mapper)
+        public IncomeService(IIncomeRepository incomeRepository, ICurrentUserService currentUserService, IMapper mapper)
         {
             _incomeRepository = incomeRepository;
+            _currentUserService = currentUserService;
             _mapper = mapper;
         }
 
 
         public async Task<List<IncomeDto>> GetAllIncomes()
         {
-            var incomes = await _incomeRepository.GetAllIncomes();
+            var userId = _currentUserService.GetCurrentUserId();
+            var incomes = await _incomeRepository.GetAllIncomes(userId);
             
             return _mapper.Map<List<IncomeDto>>(incomes);
         }

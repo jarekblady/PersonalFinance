@@ -7,24 +7,28 @@ using AutoMapper;
 using PersonalFinance.Repository.Entities;
 using PersonalFinance.Repository.Repositories.ExpenditureRepository;
 using PersonalFinance.Service.DTOs;
+using PersonalFinance.Service.Services.CurrentUserService;
 
 namespace PersonalFinance.Service.Services.ExpenditureService
 {
     public class ExpenditureService : IExpenditureService
     {
         private readonly IExpenditureRepository _expenditureRepository;
+        private readonly ICurrentUserService _currentUserService;
         private readonly IMapper _mapper;
 
-        public ExpenditureService(IExpenditureRepository expenditureRepository, IMapper mapper)
+        public ExpenditureService(IExpenditureRepository expenditureRepository, ICurrentUserService currentUserService, IMapper mapper)
         {
             _expenditureRepository = expenditureRepository;
+            _currentUserService = currentUserService;
             _mapper = mapper;
         }
 
 
         public async Task<List<ExpenditureDto>> GetAllExpenditures()
         {
-            var expenditures = await _expenditureRepository.GetAllExpenditures();
+            var userId = _currentUserService.GetCurrentUserId();
+            var expenditures = await _expenditureRepository.GetAllExpenditures(userId);
 
             return _mapper.Map<List<ExpenditureDto>>(expenditures);
         }

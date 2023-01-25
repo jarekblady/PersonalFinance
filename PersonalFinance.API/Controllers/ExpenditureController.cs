@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PersonalFinance.Service.DTOs;
 using PersonalFinance.Service.Services.ExpenditureService;
 
@@ -6,6 +7,7 @@ namespace PersonalFinance.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ExpenditureController : ControllerBase
     {
         private readonly IExpenditureService _expenditureService;
@@ -13,7 +15,6 @@ namespace PersonalFinance.API.Controllers
         {
             _expenditureService = expenditureService;
         }
-
         [HttpGet]
         public async Task<ActionResult<List<ExpenditureDto>>> GetAllExpenditures()
         {

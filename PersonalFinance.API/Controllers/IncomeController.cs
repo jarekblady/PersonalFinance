@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PersonalFinance.Service.DTOs;
 using PersonalFinance.Service.Services.IncomeService;
 
@@ -6,6 +7,7 @@ namespace PersonalFinance.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class IncomeController : ControllerBase
     {
         private readonly IIncomeService _incomeService;
@@ -13,7 +15,6 @@ namespace PersonalFinance.API.Controllers
         {
             _incomeService = incomeService;
         }
-
         [HttpGet]
         public async Task<ActionResult<List<IncomeDto>>> GetAllIncomes()
         {

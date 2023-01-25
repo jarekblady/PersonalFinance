@@ -18,9 +18,11 @@ namespace PersonalFinance.Repository.Repositories.IncomeRepository
             _context = context;
         }
 
-        public async Task<List<Income>> GetAllIncomes()
+        public async Task<List<Income>> GetAllIncomes(int userId)
         {
-            return await _context.Incomes.Include(x => x.Category).ToListAsync();
+            return await _context.Incomes.Include(x => x.Category).Where(x => x.Category.UserId == userId)
+                .OrderByDescending(x => x.Date.Date)
+                .ToListAsync();
         }
 
         public async Task<Income> GetByIdIncome(int id)

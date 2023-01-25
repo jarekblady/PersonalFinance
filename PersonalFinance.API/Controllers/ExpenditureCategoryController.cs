@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PersonalFinance.Service.DTOs;
 using PersonalFinance.Service.Services.ExpenditureCategoryService;
 
@@ -6,6 +7,7 @@ namespace PersonalFinance.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ExpenditureCategoryController : ControllerBase
     {
         private readonly IExpenditureCategoryService _expenditureCategoryService;
