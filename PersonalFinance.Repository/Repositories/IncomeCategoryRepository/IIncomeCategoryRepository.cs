@@ -9,7 +9,7 @@ namespace PersonalFinance.Repository.Repositories.IncomeCategoryRepository
 {
     public interface IIncomeCategoryRepository
     {
-        Task<List<IncomeCategory>> GetAllIncomeCategories();
+        Task<List<IncomeCategory>> GetUserIncomeCategories(int userId);
         Task<IncomeCategory> GetByIdIncomeCategory(int id);
         Task CreateIncomeCategory(IncomeCategory incomeCategory);
         Task UpdateIncomeCategory(IncomeCategory incomeCategory);

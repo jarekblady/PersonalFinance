@@ -7,24 +7,28 @@ using AutoMapper;
 using PersonalFinance.Repository.Entities;
 using PersonalFinance.Repository.Repositories.ExpenditureCategoryRepository;
 using PersonalFinance.Service.DTOs;
+using PersonalFinance.Service.Services.CurrentUserService;
 
 namespace PersonalFinance.Service.Services.ExpenditureCategoryService
 {
     public class ExpenditureCategoryService : IExpenditureCategoryService
     {
         private readonly IExpenditureCategoryRepository _expenditureCategoryRepository;
+        private readonly ICurrentUserService _currentUserService;
         private readonly IMapper _mapper;
 
-        public ExpenditureCategoryService(IExpenditureCategoryRepository expenditureCategoryRepository, IMapper mapper)
+        public ExpenditureCategoryService(IExpenditureCategoryRepository expenditureCategoryRepository, ICurrentUserService currentUserService, IMapper mapper)
         {
             _expenditureCategoryRepository = expenditureCategoryRepository;
+            _currentUserService = currentUserService;
             _mapper = mapper;
         }
 
 
         public async Task<List<ExpenditureCategoryDto>> GetAllExpenditureCategories()
         {
-            var expenditureCategories = await _expenditureCategoryRepository.GetAllExpenditureCategories();
+            var userId = _currentUserService.GetCurrentUserId();
+            var expenditureCategories = await _expenditureCategoryRepository.GetUserExpenditureCategories(userId);
 
             return _mapper.Map<List<ExpenditureCategoryDto>>(expenditureCategories);
         }
@@ -39,12 +43,14 @@ namespace PersonalFinance.Service.Services.ExpenditureCategoryService
         public async Task CreateExpenditureCategory(ExpenditureCategoryDto dto)
         {
             var expenditureCategory = _mapper.Map<ExpenditureCategory>(dto);
+            expenditureCategory.UserId = _currentUserService.GetCurrentUserId();
             await _expenditureCategoryRepository.CreateExpenditureCategory(expenditureCategory);
         }
 
         public async Task UpdateExpenditureCategory(ExpenditureCategoryDto dto)
         {
             var expenditureCategory = _mapper.Map<ExpenditureCategory>(dto);
+            expenditureCategory.UserId = _currentUserService.GetCurrentUserId();
             await _expenditureCategoryRepository.UpdateExpenditureCategory(expenditureCategory);
         }
 

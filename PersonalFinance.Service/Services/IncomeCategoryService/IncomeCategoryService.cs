@@ -7,24 +7,28 @@ using AutoMapper;
 using PersonalFinance.Repository.Entities;
 using PersonalFinance.Repository.Repositories.IncomeCategoryRepository;
 using PersonalFinance.Service.DTOs;
+using PersonalFinance.Service.Services.CurrentUserService;
 
 namespace PersonalFinance.Service.Services.IncomeCategoryService
 {
     public class IncomeCategoryService : IIncomeCategoryService
     {
         private readonly IIncomeCategoryRepository _incomeCategoryRepository;
+        private readonly ICurrentUserService _currentUserService;
         private readonly IMapper _mapper;
 
-        public IncomeCategoryService(IIncomeCategoryRepository incomeCategoryRepository, IMapper mapper)
+        public IncomeCategoryService(IIncomeCategoryRepository incomeCategoryRepository, ICurrentUserService currentUserService, IMapper mapper)
         {
             _incomeCategoryRepository = incomeCategoryRepository;
+            _currentUserService = currentUserService;
             _mapper = mapper;
         }
 
 
         public async Task<List<IncomeCategoryDto>> GetAllIncomeCategories()
         {
-            var incomeCategories = await _incomeCategoryRepository.GetAllIncomeCategories();
+            var userId = _currentUserService.GetCurrentUserId();
+            var incomeCategories = await _incomeCategoryRepository.GetUserIncomeCategories(userId);
 
             return _mapper.Map<List<IncomeCategoryDto>>(incomeCategories);
         }
@@ -39,12 +43,14 @@ namespace PersonalFinance.Service.Services.IncomeCategoryService
         public async Task CreateIncomeCategory(IncomeCategoryDto dto)
         {
             var incomeCategory = _mapper.Map<IncomeCategory>(dto);
+            incomeCategory.UserId = _currentUserService.GetCurrentUserId();
             await _incomeCategoryRepository.CreateIncomeCategory(incomeCategory);
         }
 
         public async Task UpdateIncomeCategory(IncomeCategoryDto dto)
         {
             var incomeCategory = _mapper.Map<IncomeCategory>(dto);
+            incomeCategory.UserId = _currentUserService.GetCurrentUserId();
             await _incomeCategoryRepository.UpdateIncomeCategory(incomeCategory);
         }
 

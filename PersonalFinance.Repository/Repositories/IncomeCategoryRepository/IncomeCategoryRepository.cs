@@ -18,9 +18,9 @@ namespace PersonalFinance.Repository.Repositories.IncomeCategoryRepository
             _context = context;
         }
 
-        public async Task<List<IncomeCategory>> GetAllIncomeCategories()
+        public async Task<List<IncomeCategory>> GetUserIncomeCategories(int userId)
         {
-            return await _context.IncomeCategories.Include(x => x.Incomes).ToListAsync();
+            return await _context.IncomeCategories.Include(x => x.Incomes).Where(x => x.UserId == userId).ToListAsync();
         }
 
         public async Task<IncomeCategory> GetByIdIncomeCategory(int id)

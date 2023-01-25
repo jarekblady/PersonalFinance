@@ -9,7 +9,7 @@ namespace PersonalFinance.Repository.Repositories.ExpenditureCategoryRepository
 {
     public interface IExpenditureCategoryRepository
     {
-        Task<List<ExpenditureCategory>> GetAllExpenditureCategories();
+        Task<List<ExpenditureCategory>> GetUserExpenditureCategories(int userId);
         Task<ExpenditureCategory> GetByIdExpenditureCategory(int id);
         Task CreateExpenditureCategory(ExpenditureCategory expenditureCategory);
         Task UpdateExpenditureCategory(ExpenditureCategory expenditureCategory);
