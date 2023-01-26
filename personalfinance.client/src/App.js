@@ -1,59 +1,57 @@
-import React, { Component } from 'react';
+import React from 'react';
+import './App.css';
 
-export default class App extends Component {
-    static displayName = App.name;
+import Home from './components/home/Home'
+import Login from './components/account/Login'
+import Register from './components/account/Register'
 
-    constructor(props) {
-        super(props);
-        this.state = { forecasts: [], loading: true };
-    }
+import { Route, Routes, NavLink } from 'react-router-dom'
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import { useUserContext } from "./context/UserContext";
 
-    componentDidMount() {
-        this.populateWeatherData();
-    }
+function App() {
 
-    static renderForecastsTable(forecasts) {
-        return (
-            <table className='table table-striped' aria-labelledby="tabelLabel">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Temp. (C)</th>
-                        <th>Temp. (F)</th>
-                        <th>Summary</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {forecasts.map(forecast =>
-                        <tr key={forecast.date}>
-                            <td>{forecast.date}</td>
-                            <td>{forecast.temperatureC}</td>
-                            <td>{forecast.temperatureF}</td>
-                            <td>{forecast.summary}</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
-        );
-    }
+    const { user, setUser } = useUserContext();
 
-    render() {
-        let contents = this.state.loading
-            ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
-            : App.renderForecastsTable(this.state.forecasts);
+    return (
+            <div className="container">
 
-        return (
-            <div>
-                <h1 id="tabelLabel" >Weather forecast</h1>
-                <p>This component demonstrates fetching data from the server.</p>
-                {contents}
+                <h2 className="m-3 d-flex justify-content-center">
+                    Personal Finance App
+                </h2>
+
+                <Navbar bg="dark" variant="dark">
+                    <Container>
+                    <Navbar.Brand to="/Home" as={NavLink}>PersonalFinanceApp</Navbar.Brand>
+                        
+                        <Nav className="justify-content-end flex-grow-1 pe-3">
+                        <Nav.Link to="/Home" as={NavLink}>Home</Nav.Link>
+                        {!user &&
+                            <>
+                            <Nav.Link to="/Login" as={NavLink}>Login</Nav.Link>
+                            <Nav.Link to="/Register" as={NavLink}>Register</Nav.Link>
+                            </>
+                        }
+                        {user &&
+                            <>
+                            <Nav.Link to="/Home" as={NavLink} onClick={() => { setUser() }}>Logout</Nav.Link>
+                            </>
+                        }
+                            </Nav>
+                        
+                    </Container>
+                </Navbar>
+
+                <Routes>
+                    <Route exact path='/Home' element={<Home />} />
+                    <Route path='/Login' element={<Login />} />
+                    <Route path='/Register' element={<Register />} />
+                </Routes>
+
             </div>
-        );
-    }
-
-    async populateWeatherData() {
-        const response = await fetch('weatherforecast');
-        const data = await response.json();
-        this.setState({ forecasts: data, loading: false });
-    }
+    );
 }
+
+export default App;

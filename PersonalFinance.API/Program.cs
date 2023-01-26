@@ -79,6 +79,8 @@ builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<DbInitializer>();
 
+builder.Services.AddCors();
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
@@ -127,6 +129,11 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseAuthentication();
 
 app.UseHttpsRedirection();
+
+app.UseCors(opt =>
+{
+    opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:3000");
+});
 
 app.UseAuthorization();
 
