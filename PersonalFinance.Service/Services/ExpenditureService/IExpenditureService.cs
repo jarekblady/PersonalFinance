@@ -10,6 +10,7 @@ namespace PersonalFinance.Service.Services.ExpenditureService
     public interface IExpenditureService
     {
         Task<List<ExpenditureDto>> GetAllExpenditures();
+        Task<List<ExpenditureDto>> GetAllExpendituresForCategory(int categoryId);
         Task<ExpenditureDto> GetByIdExpenditure(int id);
         Task CreateExpenditure(ExpenditureDto dto);
         Task UpdateExpenditure(ExpenditureDto dto);

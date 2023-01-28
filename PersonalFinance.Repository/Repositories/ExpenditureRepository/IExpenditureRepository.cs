@@ -10,6 +10,7 @@ namespace PersonalFinance.Repository.Repositories.ExpenditureRepository
     public interface IExpenditureRepository
     {
         Task<List<Expenditure>> GetAllExpenditures(int userId);
+        Task<List<Expenditure>> GetAllExpendituresForCategory(int userId, int categoryId);
         Task<Expenditure> GetByIdExpenditure(int id);
         Task CreateExpenditure(Expenditure expenditure);
         Task UpdateExpenditure(Expenditure expenditure);

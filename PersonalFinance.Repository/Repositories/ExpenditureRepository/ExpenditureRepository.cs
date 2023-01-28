@@ -25,6 +25,13 @@ namespace PersonalFinance.Repository.Repositories.ExpenditureRepository
                 .ToListAsync();
         }
 
+        public async Task<List<Expenditure>> GetAllExpendituresForCategory(int userId, int categoryId)
+        {
+            return await _context.Expenditures.Include(x => x.Category).Where(x => x.Category.UserId == userId && x.CategoryId == categoryId)
+                .OrderByDescending(x => x.Date.Date)
+                .ToListAsync();
+        }
+
         public async Task<Expenditure> GetByIdExpenditure(int id)
         {
             return await _context.Expenditures.FirstOrDefaultAsync(x => x.Id == id);

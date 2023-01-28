@@ -59,6 +59,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddFluentValidationAutoValidation(conf => { conf.DisableDataAnnotationsValidation = true; });
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserValidator>();
+builder.Services.AddScoped<IValidator<IncomeCategoryDto>, IncomeCategoryValidator>();
+builder.Services.AddScoped<IValidator<ExpenditureCategoryDto>, ExpenditureCategoryValidator>();
 
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 

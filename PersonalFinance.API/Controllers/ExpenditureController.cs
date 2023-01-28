@@ -23,11 +23,20 @@ namespace PersonalFinance.API.Controllers
             return Ok(expenditures);
         }
 
+        [HttpGet("category")]
+        public async Task<ActionResult<List<ExpenditureDto>>> GetAllExpendituresForCategory(int categoryId)
+        {
+            var expenditures = await _expenditureService.GetAllExpendituresForCategory(categoryId);
+
+            return Ok(expenditures);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<ExpenditureDto>> GetExpenditure(int id)
         {
             return Ok(await _expenditureService.GetByIdExpenditure(id));
         }
+
 
         [HttpPost]
         public async Task<ActionResult> CreateExpenditure(ExpenditureDto dto)
