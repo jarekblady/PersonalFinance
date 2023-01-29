@@ -45,8 +45,8 @@ function ExpenditureList() {
             <Table className="mt-4" striped bordered hover size="sm">
                 <thead>
                     <tr>
-                        <th>Price</th>
                         <th>Date</th>
+                        <th>Price</th>
                         <th>Comment</th>
                         <th>Category</th>
                     </tr>

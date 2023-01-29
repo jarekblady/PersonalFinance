@@ -6,6 +6,7 @@ import { getExpenditureCategories, deleteExpenditureCategory } from "../../servi
 import { useUserContext } from "../../context/UserContext";
 import { AddCategoryModal } from '../categoryModal/AddCategoryModal';
 import { EditCategoryModal } from '../categoryModal/EditCategoryModal';
+import Chart from '../chart/chart';
 
 function Expenditures() {
     const [categories, setCategories] = useState([]);
@@ -85,6 +86,12 @@ function Expenditures() {
                     )}
                 </tbody>
             </Table>
+            <div style={{width: '600px'}}>
+                <Chart
+                    labels={categories.map(category => category.name)}
+                    data={categories.map(category => category?.expenditures.reduce((sum, expenditure) => sum + expenditure.price, 0))}
+                />
+            </div>
         </div>
     )
 }

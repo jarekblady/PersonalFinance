@@ -10,7 +10,7 @@ export function EditTransactionModal({ show, onHide, id, price, date, comment, c
     const { user } = useUserContext();
     const [categories, setCategories] = useState([]);
 
-    useEffect(() => {
+    function GetCategories() {
         if (transactionType === "expenditure") {
             getExpenditureCategories(user.token)
                 .then(categories => setCategories(categories));
@@ -19,8 +19,10 @@ export function EditTransactionModal({ show, onHide, id, price, date, comment, c
             getIncomeCategories(user.token)
                 .then(categories => setCategories(categories));
         }
-
-    }, [])
+    };
+    useEffect(() => {
+        GetCategories();
+    }, [GetCategories])
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -95,7 +97,6 @@ export function EditTransactionModal({ show, onHide, id, price, date, comment, c
                                         name="date"
                                         defaultValue={date.split("T")[0]}
                                     />
-                                    <p class="text-danger">{validationPrice}</p>
                                 </Form.Group>
 
                                 <Form.Group controlId="comment">

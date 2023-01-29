@@ -83,7 +83,6 @@ export function AddTransactionModal({ show, onHide, transactionType }) {
                                         type="date"
                                         name="date"
                                     />
-                                    <p class="text-danger">{validationPrice}</p>
                                 </Form.Group>
 
                                 <Form.Group controlId="comment">

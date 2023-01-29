@@ -6,6 +6,7 @@ import { getIncomeCategories, deleteIncomeCategory } from "../../services/Income
 import { useUserContext } from "../../context/UserContext";
 import { AddCategoryModal } from '../categoryModal/AddCategoryModal';
 import { EditCategoryModal } from '../categoryModal/EditCategoryModal';
+import Chart from '../chart/chart';
 
 function Incomes() {
     const [categories, setCategories] = useState([]);
@@ -67,7 +68,6 @@ function Incomes() {
                                     >Edit</Button>
 
                                     <Button className="mr-2"
-                                        //to="/ExpenditureList" as={NavLink}
                                         onClick={() => handleDeleteCategory(category.id)}
                                         variant="danger"
                                     >Delete</Button>
@@ -86,6 +86,12 @@ function Incomes() {
                     )}
                 </tbody>
             </Table>
+            <div style={{ width: '600px' }}>
+                <Chart
+                    labels={categories.map(category => category.name)}
+                    data={categories.map(category => category?.incomes.reduce((sum, income) => sum + income.price, 0))}
+                />
+            </div>
         </div>
     )
 }

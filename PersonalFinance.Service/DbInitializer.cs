@@ -46,6 +46,17 @@ namespace PersonalFinance.Service
                 _context.IncomeCategories.AddRange(GetIncomeCategories());
                 _context.SaveChanges();
             }
+            if (!_context.Expenditures.Any())
+            {
+                _context.Expenditures.AddRange(GetExpenses());
+                _context.SaveChanges();
+            }
+
+            if (!_context.Incomes.Any())
+            {
+                _context.Incomes.AddRange(GetIncomes());
+                _context.SaveChanges();
+            }
         }
 
         private IEnumerable<ExpenditureCategory> GetExpenditureCategories()
@@ -66,6 +77,28 @@ namespace PersonalFinance.Service
             {
                 new IncomeCategory() {Name = "Salary", UserId = 1},
                 new IncomeCategory() {Name = "Scholarship", UserId = 1},
+            };
+        }
+        private IEnumerable<Expenditure> GetExpenses()
+        {
+            return new List<Expenditure>()
+            {
+                new Expenditure() {CategoryId = 1, Price = 30.00, Comment = "breakfast", Date = new DateTime(2023, 1, 1, 00, 00, 00)},
+                new Expenditure() {CategoryId = 1, Price = 20.00, Comment = "lunch", Date = new DateTime(2023, 1, 4, 00, 00, 00)},
+                new Expenditure() {CategoryId = 2, Price = 80.00, Comment = "train", Date = new DateTime(2023, 1, 7,  00, 00, 00)},
+                new Expenditure() {CategoryId = 2, Price = 10.00, Comment = "taxi", Date = new DateTime(2023, 1, 3, 00, 00, 00)},
+                new Expenditure() {CategoryId = 2, Price = 20.00, Comment = "bus", Date = new DateTime(2023, 1, 15,  00, 00, 00)},
+                new Expenditure() {CategoryId = 3, Price = 50.00, Comment = "mobile", Date = new DateTime(2023, 1, 14, 00, 00, 00)},
+                new Expenditure() {CategoryId = 4, Price = 70.00, Comment = "internet", Date = new DateTime(2023, 1, 25,  00, 00, 00)},
+                new Expenditure() {CategoryId = 5, Price = 30.00, Comment = "cinema", Date = new DateTime(2023, 1, 20, 00, 00, 00)},
+            };
+        }
+        private IEnumerable<Income> GetIncomes()
+        {
+            return new List<Income>()
+            {
+                new Income() { CategoryId = 1, Price = 3000, Comment = "salary", Date = new DateTime(2023, 1, 1, 00, 00, 00)},
+                new Income() { CategoryId = 2, Price = 1000, Comment = "scholarship", Date = new DateTime(2023, 1, 15, 00, 00, 00)},
             };
         }
 
