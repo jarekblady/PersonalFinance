@@ -7,6 +7,7 @@ import Register from './components/account/Register'
 import Expenditures from './components/expenditure/Expenditures'
 import ExpenditureList from './components/expenditure/ExpenditureList'
 import Incomes from './components/income/Incomes'
+import IncomeList from './components/income/IncomeList'
 
 import { Route, Routes, NavLink } from 'react-router-dom'
 import Container from 'react-bootstrap/Container';
@@ -57,9 +58,10 @@ function App() {
                     <Route exact path='/Home' element={<Home />} />
                     <Route path='/Login' element={<Login />} />
                     <Route path='/Register' element={<Register />} />
-                <Route path='/Expenditures' element={<Expenditures />} />
+                    <Route path='/Expenditures' element={<Expenditures />} />
                     <Route path='/ExpenditureList' element={<ExpenditureList />} />
                     <Route path='/Incomes' element={<Incomes />} />
+                    <Route path='/IncomeList' element={<IncomeList />} />
                 </Routes>
 
             </div>

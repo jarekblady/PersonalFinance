@@ -11,7 +11,7 @@ namespace PersonalFinance.Repository.Entities
         public int Id { get; set; }
         public double Price { get; set; }
         public string? Comment { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Now;
         public int CategoryId { get; set; }
         public IncomeCategory Category { get; set; }
     }

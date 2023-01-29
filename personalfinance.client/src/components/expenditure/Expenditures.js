@@ -2,10 +2,10 @@ import { useState, useEffect} from "react";
 import { Table } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom'
 import { Button, ButtonToolbar } from 'react-bootstrap';
-import { getCategories, deleteCategory } from "../../services/ExpenditureService";
+import { getExpenditureCategories, deleteExpenditureCategory } from "../../services/ExpenditureService";
 import { useUserContext } from "../../context/UserContext";
-import { AddCategoryModal } from './AddCategoryModal';
-import { EditCategoryModal } from './EditCategoryModal';
+import { AddCategoryModal } from '../categoryModal/AddCategoryModal';
+import { EditCategoryModal } from '../categoryModal/EditCategoryModal';
 
 function Expenditures() {
     const [categories, setCategories] = useState([]);
@@ -15,7 +15,7 @@ function Expenditures() {
     const { user } = useUserContext();
 
     async function GetCategories() {
-        await getCategories(user.token)
+        await getExpenditureCategories(user.token)
             .then(categories => setCategories(categories));
     };
 
@@ -24,13 +24,17 @@ function Expenditures() {
     }, [refreshKey, addModalShow, editModalShow])
 
     function handleDeleteCategory(id){
-        deleteCategory(id, user.token);
+        deleteExpenditureCategory(id, user.token);
         setRefreshKey(oldKey => oldKey + 1)
     };
     return (
         <div>
             <ButtonToolbar className="mt-4">
                 <Button
+                    variant="danger"
+                    to="/ExpenditureList" as={NavLink}
+                >show all transactions</Button>
+                <Button 
                     variant='primary'
                     onClick={() => setAddModalShow(true)}
                 >Add Category</Button>
@@ -38,6 +42,7 @@ function Expenditures() {
                 <AddCategoryModal
                     show={addModalShow}
                     onHide={() => setAddModalShow(false)}
+                    categoryType={"expenditure"}
                 />
 
             </ButtonToolbar>
@@ -62,7 +67,6 @@ function Expenditures() {
                                     >Edit</Button>
 
                                     <Button className="mr-2"
-                                        //to="/ExpenditureList" as={NavLink}
                                         onClick={() => handleDeleteCategory(category.id)}
                                         variant="danger"
                                     >Delete</Button>
@@ -72,6 +76,7 @@ function Expenditures() {
                                         onHide={() => setEditModalShow(false)}
                                         id={category.id}
                                         name={category.name}
+                                        categoryType={"expenditure"}
                                     />
                                 </ButtonToolbar>
 

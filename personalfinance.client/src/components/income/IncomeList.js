@@ -1,64 +1,63 @@
 import { useState, useEffect } from "react";
 import { Table } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom'
 import { Button, ButtonToolbar } from 'react-bootstrap';
-import { getIncomeCategories, deleteIncomeCategory } from "../../services/IncomeService";
+import { getExpenditures, deleteExpenditure } from "../../services/ExpenditureService";
 import { useUserContext } from "../../context/UserContext";
-import { AddCategoryModal } from '../categoryModal/AddCategoryModal';
-import { EditCategoryModal } from '../categoryModal/EditCategoryModal';
+import { AddTransactionModal } from '../transactionModal/AddTransactionModal';
+import { EditTransactionModal } from '../transactionModal/EditTransactionModal';
 
-function Incomes() {
-    const [categories, setCategories] = useState([]);
-    const [refreshKey, setRefreshKey] = useState(0);
+function IncomeList() {
+    const { user } = useUserContext();
+    const [expenditures, setExpenditures] = useState([]);
     const [addModalShow, setAddModalShow] = useState(false)
     const [editModalShow, setEditModalShow] = useState(false)
-    const { user } = useUserContext();
+    const [refreshKey, setRefreshKey] = useState(0);
 
-    async function GetCategories() {
-        await getIncomeCategories(user.token)
-            .then(categories => setCategories(categories));
+    async function GetExpenditures() {
+        await getExpenditures(user.token)
+            .then(expenditures => setExpenditures(expenditures));
     };
 
     useEffect(() => {
-        GetCategories();
+        GetExpenditures();
     }, [refreshKey, addModalShow, editModalShow])
 
-    function handleDeleteCategory(id) {
-        deleteIncomeCategory(id, user.token);
+    function handleDeleteExpenditure(id) {
+        deleteExpenditure(id, user.token);
         setRefreshKey(oldKey => oldKey + 1)
     };
+
     return (
         <div>
             <ButtonToolbar className="mt-4">
                 <Button
-                    variant="danger"
-                    to="/IncomeList" as={NavLink}
-                >show all transactions</Button>
-                <Button
                     variant='primary'
                     onClick={() => setAddModalShow(true)}
-                >Add Category</Button>
+                >Add Income</Button>
 
-                <AddCategoryModal
+                <AddTransactionModal
                     show={addModalShow}
                     onHide={() => setAddModalShow(false)}
-                    categoryType={"income"}
+                    transactionType={"expenditure"}
                 />
 
             </ButtonToolbar>
             <Table className="mt-4" striped bordered hover size="sm">
                 <thead>
                     <tr>
+                        <th>Price</th>
+                        <th>Date</th>
+                        <th>Comment</th>
                         <th>Category</th>
-                        <th>Amount</th>
-                        <th>Options</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {categories.map(category =>
-                        <tr key={category.id}>
-                            <td>{category.name}</td>
-                            <td>{category?.incomes.reduce((sum, income) => sum + income.price, 0)}</td>
+                    {expenditures.map(expenditure =>
+                        <tr key={expenditure.id}>
+                            <td>{expenditure.date.split('T')[0]}</td>
+                            <td>${(expenditure.price).toFixed(2)}</td>
+                            <td>{expenditure.comment}</td>
+                            <td>{expenditure.categoryName}</td>
                             <td>
                                 <ButtonToolbar>
                                     <Button
@@ -67,17 +66,19 @@ function Incomes() {
                                     >Edit</Button>
 
                                     <Button className="mr-2"
-                                        //to="/ExpenditureList" as={NavLink}
-                                        onClick={() => handleDeleteCategory(category.id)}
+                                        onClick={() => handleDeleteExpenditure(expenditure.id)}
                                         variant="danger"
                                     >Delete</Button>
 
-                                    <EditCategoryModal
+                                    <EditTransactionModal
                                         show={editModalShow}
                                         onHide={() => setEditModalShow(false)}
-                                        id={category.id}
-                                        name={category.name}
-                                        categoryType={"income"}
+                                        transactionType={"expenditure"}
+                                        id={expenditure.id}
+                                        price={expenditure.price}
+                                        date={expenditure.date}
+                                        comment={expenditure.comment}
+                                        categoryId={expenditure.categoryId}
                                     />
                                 </ButtonToolbar>
 
@@ -90,4 +91,4 @@ function Incomes() {
     )
 }
 
-export default Incomes
+export default IncomeList

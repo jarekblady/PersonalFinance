@@ -15,14 +15,10 @@ export function useUserContext() {
 
 export function UserProvider({ children }) {
     const [user, setUser] = useState(null);
-    const [incomes, setIncomes] = useState(null);
-    const [expenditures, setExpenditures] = useState(null);
 
     return (
         <UserContext.Provider value={{
-            user, setUser,
-            incomes, setIncomes,
-            expenditures, setExpenditures
+            user, setUser
         }}>
             {children}
         </UserContext.Provider>

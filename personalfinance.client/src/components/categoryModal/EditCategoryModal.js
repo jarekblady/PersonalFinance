@@ -1,19 +1,30 @@
 import React, { useState } from 'react'
 import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
-import { updateCategory } from "../../services/ExpenditureService";
+import { updateExpenditureCategory } from "../../services/ExpenditureService";
+import { updateIncomeCategory } from "../../services/IncomeService";
 import { useUserContext } from "../../context/UserContext";
 
-export function EditCategoryModal({ show, onHide, id, name }) {
+export function EditCategoryModal({ show, onHide, id, name, categoryType }) {
     const [validationName, setValidationName] = useState();
     const { user } = useUserContext();
 
     function handleSubmit(event) {
         event.preventDefault();
-        updateCategory(event.target.id.value, event.target.name.value, user.token)
-            .then((result) => {
-                validation(result.errors)
-            },
-        )
+
+        if (categoryType === "expenditure") {
+            updateExpenditureCategory(event.target.id.value, event.target.name.value, user.token)
+                .then((result) => {
+                    validation(result.errors)
+                },
+                )
+        }
+        else if (categoryType === "income") {
+            updateIncomeCategory(event.target.id.value, event.target.name.value, user.token)
+                .then((result) => {
+                    validation(result.errors)
+                },
+                )
+        }
     }
     function validation(e) {
         e.Name !== undefined ? setValidationName(e.Name[0]) : setValidationName()

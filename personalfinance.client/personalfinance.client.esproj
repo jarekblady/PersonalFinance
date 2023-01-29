@@ -14,6 +14,7 @@
     <Folder Include="src\components\home\" />
     <Folder Include="src\components\account\" />
     <Folder Include="src\components\income\" />
+    <Folder Include="src\components\transactionModal\" />
     <Folder Include="src\services\" />
   </ItemGroup>
   <!-- This target is copied from the ASP.NET SPA template in order to ensure node_modules are in place. -->

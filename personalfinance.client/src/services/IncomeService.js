@@ -1,5 +1,5 @@
-export async function getExpenditures(token) {
-    return await fetch(`/api/expenditure`, {
+export async function getIncomes(token) {
+    return await fetch(`/api/income`, {
         method: "GET",
         headers: {
             'Authorization': 'Bearer ' + token,
@@ -9,8 +9,8 @@ export async function getExpenditures(token) {
         .then(res => res.json())
 }
 
-export async function deleteExpenditure(id, token) {
-    return await fetch(`/api/expenditure/${id}`, {
+export async function deleteIncome(id, token) {
+    return await fetch(`/api/income/${id}`, {
         method: 'DELETE',
         headers: {
             'Authorization': 'Bearer ' + token,
@@ -20,8 +20,8 @@ export async function deleteExpenditure(id, token) {
         .then(res => res.text())
 }
 
-export async function addExpenditure(price, date, comment, categoryId, token) {
-    return await fetch(`/api/expenditure`, {
+export async function addIncome(price, date, comment, categoryId, token) {
+    return await fetch(`/api/income`, {
         method: 'POST',
         headers: {
             'Authorization': 'Bearer ' + token,
@@ -36,8 +36,8 @@ export async function addExpenditure(price, date, comment, categoryId, token) {
     })
         .then(res => res.json())
 }
-export async function updateExpenditure(id, price, date, comment, categoryId, token) {
-    return await fetch(`/api/expenditure/` + id, {
+export async function updateIncome(id, price, date, comment, categoryId, token) {
+    return await fetch(`/api/income/` + id, {
         method: 'PUT',
         headers: {
             'Authorization': 'Bearer ' + token,
@@ -54,8 +54,8 @@ export async function updateExpenditure(id, price, date, comment, categoryId, to
         .then(res => res.json())
 }
 
-export async function getExpenditureCategories(token) {
-    return await fetch(`/api/expenditureCategory`, {
+export async function getIncomeCategories(token) {
+    return await fetch(`/api/incomeCategory`, {
         method: "GET",
         headers: {
             'Authorization': 'Bearer ' + token,
@@ -65,8 +65,8 @@ export async function getExpenditureCategories(token) {
         .then(res => res.json())
 }
 
-export async function deleteExpenditureCategory(id, token) {
-    return await fetch(`/api/expenditureCategory/${id}`, {
+export async function deleteIncomeCategory(id, token) {
+    return await fetch(`/api/incomeCategory/${id}`, {
         method: 'DELETE',
         headers: {
             'Authorization': 'Bearer ' + token,
@@ -75,9 +75,8 @@ export async function deleteExpenditureCategory(id, token) {
     })
         .then(res => res.text())
 }
-
-export async function addExpenditureCategory(name, token) {
-    return await fetch(`/api/expenditureCategory`, {
+export async function addIncomeCategory(name, token) {
+    return await fetch(`/api/incomeCategory`, {
         method: 'POST',
         headers: {
             'Authorization': 'Bearer ' + token,
@@ -89,8 +88,8 @@ export async function addExpenditureCategory(name, token) {
     })
         .then(res => res.json())
 }
-export async function updateExpenditureCategory(id, name, token) {
-    return await fetch(`/api/expenditureCategory/` + id, {
+export async function updateIncomeCategory(id, name, token) {
+    return await fetch(`/api/incomeCategory/` + id, {
         method: 'PUT',
         headers: {
             'Authorization': 'Bearer ' + token,

@@ -61,6 +61,8 @@ builder.Services.AddFluentValidationAutoValidation(conf => { conf.DisableDataAnn
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserValidator>();
 builder.Services.AddScoped<IValidator<IncomeCategoryDto>, IncomeCategoryValidator>();
 builder.Services.AddScoped<IValidator<ExpenditureCategoryDto>, ExpenditureCategoryValidator>();
+builder.Services.AddScoped<IValidator<IncomeDto>, IncomeValidator>();
+builder.Services.AddScoped<IValidator<ExpenditureDto>, ExpenditureValidator>();
 
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 
