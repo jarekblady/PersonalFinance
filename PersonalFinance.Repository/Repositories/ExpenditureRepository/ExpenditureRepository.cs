@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PersonalFinance.Repository.Context;
 using PersonalFinance.Repository.Entities;
+using PersonalFinance.Repository.Queries;
 
 namespace PersonalFinance.Repository.Repositories.ExpenditureRepository
 {
@@ -18,16 +19,12 @@ namespace PersonalFinance.Repository.Repositories.ExpenditureRepository
             _context = context;
         }
 
-        public async Task<List<Expenditure>> GetAllExpenditures(int userId)
+        public async Task<List<Expenditure>> GetAllExpenditures(int userId, TransactionQuery query)
         {
-            return await _context.Expenditures.Include(x => x.Category).Where(x => x.Category.UserId == userId)
-                .OrderByDescending(x => x.Date.Date)
-                .ToListAsync();
-        }
-
-        public async Task<List<Expenditure>> GetAllExpendituresForCategory(int userId, int categoryId)
-        {
-            return await _context.Expenditures.Include(x => x.Category).Where(x => x.Category.UserId == userId && x.CategoryId == categoryId)
+            return await _context.Expenditures.Include(x => x.Category)
+                .Where(x => x.Category.UserId == userId)
+                .Where(x => (query.DateFrom == null || x.Date >= query.DateFrom) && (query.DateTo == null || x.Date <= query.DateTo))
+                .Where(x => query.CategoryId == 0 || x.CategoryId == query.CategoryId)
                 .OrderByDescending(x => x.Date.Date)
                 .ToListAsync();
         }

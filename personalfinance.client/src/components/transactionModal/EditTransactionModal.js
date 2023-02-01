@@ -9,20 +9,19 @@ export function EditTransactionModal({ show, onHide, id, price, date, comment, c
     const [validationCategoryId, setValidationCategoryId] = useState();
     const { user } = useUserContext();
     const [categories, setCategories] = useState([]);
+    const [dateFrom] = useState("")
+    const [dateTo] = useState("")
 
-    function GetCategories() {
+    useEffect(() => {
         if (transactionType === "expenditure") {
-            getExpenditureCategories(user.token)
+            getExpenditureCategories(user.token, dateFrom, dateTo)
                 .then(categories => setCategories(categories));
         }
         else if (transactionType === "income") {
-            getIncomeCategories(user.token)
+            getIncomeCategories(user.token, dateFrom, dateTo)
                 .then(categories => setCategories(categories));
         }
-    };
-    useEffect(() => {
-        GetCategories();
-    }, [GetCategories])
+    }, [user.token, dateFrom, dateTo, transactionType])
 
     function handleSubmit(event) {
         event.preventDefault();

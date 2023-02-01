@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Table } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom'
-import { Button, ButtonToolbar } from 'react-bootstrap';
+import { Button, ButtonToolbar, Form, InputGroup, Row, Col } from 'react-bootstrap';
 import { getIncomeCategories, deleteIncomeCategory } from "../../services/IncomeService";
 import { useUserContext } from "../../context/UserContext";
 import { AddCategoryModal } from '../categoryModal/AddCategoryModal';
@@ -14,27 +14,47 @@ function Incomes() {
     const [addModalShow, setAddModalShow] = useState(false)
     const [editModalShow, setEditModalShow] = useState(false)
     const { user } = useUserContext();
+    const [dateFrom, setDateFrom] = useState("")
+    const [dateTo, setDateTo] = useState("")
 
     async function GetCategories() {
-        await getIncomeCategories(user.token)
+        await getIncomeCategories(user.token, dateFrom, dateTo)
             .then(categories => setCategories(categories));
     };
 
     useEffect(() => {
         GetCategories();
-    }, [refreshKey, addModalShow, editModalShow])
+    }, [refreshKey, addModalShow, editModalShow, dateFrom, dateTo])
 
     function handleDeleteCategory(id) {
         deleteIncomeCategory(id, user.token);
         setRefreshKey(oldKey => oldKey + 1)
     };
+    const handleDateFrom = (event) => {
+        setDateFrom(event.target.value);
+    };
+    const handleDateTo = (event) => {
+        setDateTo(event.target.value);
+    };
+
+
     return (
         <div>
+            <Row className="mb-3">
+                <InputGroup as={Col} className='mt-3'>
+                    <InputGroup.Text>Date From</InputGroup.Text>
+                    <Form.Control type="date" required onChange={handleDateFrom} value={dateFrom} />
+                </InputGroup>
+                <InputGroup as={Col} className='mt-3'>
+                    <InputGroup.Text>Date To</InputGroup.Text>
+                    <Form.Control type="date" required onChange={handleDateTo} value={dateTo} />
+                </InputGroup>
+            </Row>
             <ButtonToolbar className="mt-4">
                 <Button
                     variant="danger"
                     to="/IncomeList" as={NavLink}
-                >show all transactions</Button>
+                >show all incomes</Button>
                 <Button
                     variant='primary'
                     onClick={() => setAddModalShow(true)}

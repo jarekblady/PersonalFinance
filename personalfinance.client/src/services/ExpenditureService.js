@@ -1,5 +1,5 @@
-export async function getExpenditures(token) {
-    return await fetch(`/api/expenditure`, {
+export async function getExpenditures(token, dateFrom, dateTo, categoryId) {
+    return await fetch(`/api/expenditure?dateFrom=${dateFrom}&dateTo=${dateTo}&categoryId=${categoryId}`, {
         method: "GET",
         headers: {
             'Authorization': 'Bearer ' + token,
@@ -54,8 +54,8 @@ export async function updateExpenditure(id, price, date, comment, categoryId, to
         .then(res => res.json())
 }
 
-export async function getExpenditureCategories(token) {
-    return await fetch(`/api/expenditureCategory`, {
+export async function getExpenditureCategories(token, dateFrom, dateTo) {
+    return await fetch(`/api/expenditureCategory?dateFrom=${dateFrom}&dateTo=${dateTo}`, {
         method: "GET",
         headers: {
             'Authorization': 'Bearer ' + token,

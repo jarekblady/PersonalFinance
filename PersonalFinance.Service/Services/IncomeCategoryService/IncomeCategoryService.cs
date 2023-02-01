@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using PersonalFinance.Repository.Entities;
+using PersonalFinance.Repository.Queries;
 using PersonalFinance.Repository.Repositories.IncomeCategoryRepository;
 using PersonalFinance.Service.DTOs;
 using PersonalFinance.Service.Services.CurrentUserService;
@@ -25,10 +26,10 @@ namespace PersonalFinance.Service.Services.IncomeCategoryService
         }
 
 
-        public async Task<List<IncomeCategoryDto>> GetAllIncomeCategories()
+        public async Task<List<IncomeCategoryDto>> GetAllIncomeCategories(CategoryQuery query)
         {
             var userId = _currentUserService.GetCurrentUserId();
-            var incomeCategories = await _incomeCategoryRepository.GetUserIncomeCategories(userId);
+            var incomeCategories = await _incomeCategoryRepository.GetAllIncomeCategories(userId, query);
 
             return _mapper.Map<List<IncomeCategoryDto>>(incomeCategories);
         }

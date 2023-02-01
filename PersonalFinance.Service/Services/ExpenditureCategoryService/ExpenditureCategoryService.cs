@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using PersonalFinance.Repository.Entities;
+using PersonalFinance.Repository.Queries;
 using PersonalFinance.Repository.Repositories.ExpenditureCategoryRepository;
 using PersonalFinance.Service.DTOs;
 using PersonalFinance.Service.Services.CurrentUserService;
@@ -25,10 +26,10 @@ namespace PersonalFinance.Service.Services.ExpenditureCategoryService
         }
 
 
-        public async Task<List<ExpenditureCategoryDto>> GetAllExpenditureCategories()
+        public async Task<List<ExpenditureCategoryDto>> GetAllExpenditureCategories(CategoryQuery query)
         {
             var userId = _currentUserService.GetCurrentUserId();
-            var expenditureCategories = await _expenditureCategoryRepository.GetUserExpenditureCategories(userId);
+            var expenditureCategories = await _expenditureCategoryRepository.GetAllExpenditureCategories(userId, query);
 
             return _mapper.Map<List<ExpenditureCategoryDto>>(expenditureCategories);
         }

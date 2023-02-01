@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PersonalFinance.Repository.Context;
 using PersonalFinance.Repository.Entities;
+using PersonalFinance.Repository.Queries;
 
 namespace PersonalFinance.Repository.Repositories.ExpenditureCategoryRepository
 {
@@ -18,9 +19,11 @@ namespace PersonalFinance.Repository.Repositories.ExpenditureCategoryRepository
             _context = context;
         }
 
-        public async Task<List<ExpenditureCategory>> GetUserExpenditureCategories(int userId)
+        public async Task<List<ExpenditureCategory>> GetAllExpenditureCategories(int userId, CategoryQuery query)
         {
-            return await _context.ExpenditureCategories.Include(x => x.Expenditures).Where(x => x.UserId == userId).ToListAsync();
+            return await _context.ExpenditureCategories
+                .Include(x => x.Expenditures.Where(x => (query.DateFrom == null || x.Date >= query.DateFrom) && (query.DateTo == null || x.Date <= query.DateTo)))
+                .Where(x => x.UserId == userId).ToListAsync();
         }
 
         public async Task<ExpenditureCategory> GetByIdExpenditureCategory(int id)

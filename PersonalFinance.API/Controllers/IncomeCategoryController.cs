@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PersonalFinance.Repository.Queries;
 using PersonalFinance.Service.DTOs;
 using PersonalFinance.Service.Services.IncomeCategoryService;
 
@@ -17,9 +18,9 @@ namespace PersonalFinance.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<IncomeCategoryDto>>> GetAllIncomeCategories()
+        public async Task<ActionResult<List<IncomeCategoryDto>>> GetAllIncomeCategories([FromQuery] CategoryQuery query)
         {
-            var incomeCategories = await _incomeCategoryService.GetAllIncomeCategories();
+            var incomeCategories = await _incomeCategoryService.GetAllIncomeCategories(query);
 
             return Ok(incomeCategories);
         }

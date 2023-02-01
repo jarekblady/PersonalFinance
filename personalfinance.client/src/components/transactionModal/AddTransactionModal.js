@@ -9,14 +9,16 @@ export function AddTransactionModal({ show, onHide, transactionType }) {
     const [validationCategoryId, setValidationCategoryId] = useState();
     const { user } = useUserContext();
     const [categories, setCategories] = useState([]);
+    const [dateFrom] = useState("")
+    const [dateTo] = useState("")
 
     function GetCategories() {
         if (transactionType === "expenditure") {
-            getExpenditureCategories(user.token)
+            getExpenditureCategories(user.token, dateFrom, dateTo)
                 .then(categories => setCategories(categories));
         }
         else if (transactionType === "income") {
-            getIncomeCategories(user.token)
+            getIncomeCategories(user.token, dateFrom, dateTo)
                 .then(categories => setCategories(categories));
         }
     };
